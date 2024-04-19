@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.1
+    ports:
+      - "8080:8080"
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    command: ["start-dev"]
+  spring:
+    build: .
+    ports:
+      - "8088:8088"
+    environment:
+        - FRONTEND_BASE_URL=http://localhost:3001
+        - KEYCLOAK_REALM=cvproject
+        - KEYCLOAK_CLIENT_ID=test
+        - KEYCLOAK_CLIENT_SECRET=XZFD3f6K87mYWJRD36Ug0zfg4YAmEhEi
+        - DATABASE_URL=jdbc:mysql://db:3306/cvproject
+        - DATABASE_USERNAME=root
+        - DATABASE_PASSWORD=123
+  nodejs:
+    build: D:\Spring\CV_Project\cvproject-ui
+    ports:
+      - "3001:80"
+    environment:
+        - REACT_APP_API_URL=http://localhost:8088
+        - REACT_APP_PROJECT_URL=http://localhost:3001
+        - REACT_APP_OIDC_AUTHORITY=http://localhost:8080/realms/test
+        - REACT_APP_OIDC_CLIENT_ID=test
+        - REACT_APP_OIDC_CLIENT_SECRET=XZFD3f6K87mYWJRD36Ug0zfg4YAmEhEi
+  db:
+    image: mysql:8.3.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: cvproject
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    restart: always
+  mail:
+    build: D:\Spring\CV_Project\Mail
+    ports:
+      - "8089:8089"
+volumes:
+  mysql-data:
+    driver: local

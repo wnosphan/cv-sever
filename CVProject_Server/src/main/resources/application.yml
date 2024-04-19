@@ -1,0 +1,42 @@
+server:
+  port: ${SERVER_PORT:8088}
+
+fe:
+  base-url: ${FRONTEND_BASE_URL:https://mystorageaccount4521.z7.web.core.windows.net}
+
+keycloak:
+  base-url: https://qn24-cpl-2024-02.azurewebsites.net/realms/test/protocol/openid-connect/token/introspect
+  realm: ${KEYCLOAK_REALM:test}
+  client-id: ${KEYCLOAK_CLIENT_ID:test}
+  client-secret: ${KEYCLOAK_CLIENT_SECRET:XZFD3f6K87mYWJRD36Ug0zfg4YAmEhEi}
+api:
+  prefix: api
+spring:
+  datasource:
+     url: jdbc:mysql://cvproject.mysql.database.azure.com:3306/cvproject?useSSL=true
+#    url: ${DATABASE_URL:jdbc:mysql://localhost:3306/cvproject}
+    #url: jdbc:mysql://localhost:3306/ShopApp?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+     username: cvapp
+     password: Khongbietgi1
+
+#    username: ${DATABASE_USERNAME:root}
+#    password: ${DATABASE_PASSWORD:123}
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+logging:
+  level:
+    root: INFO
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd E HH:mm:ss}){cyan} %clr(${LOG_LEVEL_PATTERN:%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr(:){faint} %m%n%clr(${LOG_EXCEPTION_CONVERSION_WORD:%wEx}){red}"
