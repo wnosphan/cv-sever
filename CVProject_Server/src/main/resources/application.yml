@@ -2,7 +2,7 @@ server:
   port: ${SERVER_PORT:8088}
 
 fe:
-  base-url: ${FRONTEND_BASE_URL:https://mystorageaccount4521.z7.web.core.windows.net}
+  base-url: ${FRONTEND_BASE_URL:https://kind-field-04c848a00.5.azurestaticapps.net}
 
 keycloak:
   base-url: https://qn24-cpl-2024-02.azurewebsites.net/realms/test/protocol/openid-connect/token/introspect
